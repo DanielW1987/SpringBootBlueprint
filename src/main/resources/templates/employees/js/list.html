@@ -5,8 +5,8 @@
   <nav data-th-replace="fragments/navigation :: copy"></nav>
 
   <div class="container">
-    <h1>Employees</h1>
-    <a type="button" class="btn btn-primary btn-sm" href="#" data-th-href="@{ ${createUrl} }">New Employee</a>
+    <h1>Employees (JavaScript)</h1>
+    <button type="button" class="btn btn-primary">New Employee</button>
     <table id="employee-table" class="table table-hover">
       <thead>
       <tr>
@@ -42,5 +42,17 @@
 
   </div>
   <div data-th-replace="fragments/footer :: copy"></div>
+  <script>
+    $(document).ready(function() {
+      // Get JSON-formatted data from the server
+      $.getJSON( "/rest/v1/employees", function( resp ) {
+
+          // Log each key in the response data
+          $.each( resp, function( key, value ) {
+              console.log( key + " : " + value );
+          });
+      });
+    });
+  </script>
   </body>
 </html>
