@@ -12,6 +12,7 @@ public class Endpoints {
   public static final String EMPLOYEES_CREATE   = "/employees/create";
   public static final String EMPLOYEES_EDIT     = "/employees/edit/{id}";
   public static final String EMPLOYEES_DELETE   = "/employees/delete/{id}";
+  public static final String EMPLOYEES_JS_LIST  = "/employees-js";
 
   // Errors
   public static final String ERROR              = "/error";

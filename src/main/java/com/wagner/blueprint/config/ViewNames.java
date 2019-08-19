@@ -4,9 +4,10 @@ public class ViewNames {
 
   // General
   public static final String INDEX             = "index";
-  public static final String EMPLOYESS_LIST    = "/employees/list";
-  public static final String EMPLOYESS_EDIT    = "/employees/edit";
-  public static final String EMPLOYESS_CREATE  = "/employees/create";
+  public static final String EMPLOYEES_LIST    = "employees/list";
+  public static final String EMPLOYEES_EDIT    = "employees/edit";
+  public static final String EMPLOYEES_CREATE  = "employees/create";
+  public static final String EMPLOYEES_JS_LIST = "employees/js/list";
 
   // Error pages
   public static final String ERROR     = "error/default";
