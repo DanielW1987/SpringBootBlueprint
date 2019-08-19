@@ -21,7 +21,7 @@
         <th scope="col">Actions</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody id="employee-data">
       </tbody>
     </table>
   </div>
@@ -40,7 +40,7 @@
        */
       const appendEmployee = function (employee) {
           // Find a <table> element with id="employee-table"
-          const table = document.getElementById("employee-table");
+          const table = document.getElementById("employee-data");
 
           // Create an empty <tr> element and add it to the last position of the table
           const row = table.insertRow(-1);
