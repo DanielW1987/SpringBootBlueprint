@@ -8,7 +8,7 @@
 
   <div class="container">
     <h1>Employees (JavaScript)</h1>
-    <button type="button" class="btn btn-primary">New Employee</button>
+    <button type="button" class="btn btn-primary" id="new-employee-button">New Employee</button>
     <table id="employee-table" class="table table-hover">
       <thead>
       <tr>
@@ -24,68 +24,200 @@
       <tbody id="employee-data">
       </tbody>
     </table>
+
+    <div id="employee-create-dialog" title="Create new employee">
+      <form method="post" action="#" id="employee-create-form">
+        <fieldset>
+          <!-- First name-->
+          <div class="form-group row">
+            <label for="firstName" class="col-sm-3 col-form-label">First name</label>
+            <div class="col-sm-7">
+              <input type="text" id="firstName"  placeholder="Your first name" class="form-control" required autofocus />
+            </div>
+          </div>
+
+          <!-- Last name -->
+          <div class="form-group row">
+            <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
+            <div class="col-sm-7">
+              <input type="text" id="lastName" placeholder="Your last name" class="form-control" required />
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-7">
+              <input type="email" id="email" placeholder="Your email" class="form-control" required />
+            </div>
+          </div>
+
+          <!-- Birthday -->
+          <div class="form-group row">
+            <label for="birthday" class="col-sm-3 col-form-label">Birthday</label>
+            <div class="col-sm-7">
+              <input type="date" id="birthday" min="1920-01-01" max="2040-12-31" class="form-control" />
+            </div>
+          </div>
+
+          <!-- Team name -->
+          <div class="form-group row">
+            <label for="teamName" class="col-sm-3 col-form-label">Team name</label>
+            <div class="col-sm-7">
+              <input type="text" id="teamName" placeholder="Your teams name" class="form-control" required />
+            </div>
+          </div>
+
+          <!-- Career level -->
+          <div class="form-group row">
+            <label for="careerLevel" class="col-sm-3 col-form-label">Career level</label>
+            <div class="col-sm-7">
+              <select id="careerLevel" class="form-control">
+                <option></option>
+                <option>Junior</option>
+                <option>Professional</option>
+                <option>Senior</option>
+                <option>Experienced Senior</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Job -->
+          <div class="form-group row">
+            <label for="job" class="col-sm-3 col-form-label">Job</label>
+            <div class="col-sm-7">
+              <select id="job" class="form-control">
+                <option selected></option>
+                <option>Java Developer</option>
+                <option>QA Engineer</option>
+                <option>Product Manager</option>
+              </select>
+            </div>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+
   </div>
+
   <div data-th-replace="fragments/footer :: copy"></div>
+
   <script>
 
-      /**
-       * @param employee.name         the name
-       * @param employee.email        the email address
-       * @param employee.birthday     the birthday as YYYY-MM-DD
-       * @param employee.teamName     the name of the development team
-       * @param employee.levelAndJob  the career level and job of the employee
-       * @param employee.active       true if employee is still active, false otherwise
-       * @param employee.editUrl      the URL to edit the data of the employee
-       * @param employee.deleteUrl    the URL to edit the delete the employee
-       */
-      const appendEmployee = function (employee) {
-          // Find a <table> element with id="employee-table"
-          const table = document.getElementById("employee-data");
+    /**
+     * Load all employees on load or reload
+     */
+    $(document).ready(function () {
+        // get employees
+        requestEmployees();
 
-          // Create an empty <tr> element and add it to the last position of the table
-          const row = table.insertRow(-1);
-          // Todo danielw: add id value
+        let dialog = $("#employee-create-dialog").dialog({
+            autoOpen: false,
+            height: 550,
+            width: 520,
+            modal: true,
+            buttons: {
+                "Create": function () {
+                    createEmployee();
+                    dialog.dialog( "close" );
+                },
+                Cancel: function() {
+                    dialog.dialog( "close" );
+                }
+            },
+            close: function () {
+                // ToDo DanielW: reset form on close
+            }
+        });
 
-          // Insert new cells (<td> elements)
-          row.insertCell(0).innerText = employee.name;
-          row.insertCell(1).innerText = employee.email;
-          row.insertCell(2).innerText = employee.birthday;
-          row.insertCell(3).innerText = employee.teamName;
-          row.insertCell(4).innerText = employee.levelAndJob;
-
-          if (employee.active) {
-              row.insertCell(5).innerHTML = '<span class="badge badge-success">Active</span>';
-          } else {
-              row.insertCell(5).innerHTML = '<span class="badge badge-secondary">Inactive</span>';
-          }
-
-          row.insertCell(6).innerHTML = '<a href="' + employee.editUrl + '"><i class="material-icons table-action-icon">edit</i></a>' +
-                                        '<a href="' + employee.deleteUrl + '"><i class="material-icons table-action-icon">delete</i></a>';
-      };
-
-      $(document).ready(function () {
-
-        $.ajax({
-            url: "/rest/v1/employees",
-            type: "GET",
-            dataType: "json"
-        })
-          .done(function (json) {
-              console.debug(json);
-              jQuery.each(json, function (i, employee) {
-                  appendEmployee(employee);
-              });
-          })
-          .fail(function (xhr, status, errorThrown) {
-              alert( "Sorry, there was a problem!" );
-              console.log( "Error: " + errorThrown );
-              console.log( "Status: " + status );
-              console.dir( xhr );
-          })
-          .always(function (xhr, status) {
-              // alert("The request is complete!" + xhr + " " + status)
-          })
+        $("#new-employee-button").button().on("click", function() {
+            // hack: set div containers visibility to visible because it's initially hidden to prevent form popup on page load (maybe there are better solutions)
+            document.getElementById("employee-create-dialog").style.visibility = 'visible';
+            dialog.dialog( "open" );
+        });
     });
+
+    /**
+     * Request employees from REST endpoint via AJAX.
+     */
+    const requestEmployees = function () {
+        $.getJSON("/rest/v1/employees", function (json) {
+            clearEmployeeTable();
+            jQuery.each(json, function (i, employee) {
+                appendEmployee(employee);
+            });
+        });
+    };
+
+    const clearEmployeeTable = function () {
+        $("#employee-data tr").remove();
+    };
+
+    /**
+     * Append an employee json node to html table.
+     * @param employee.name         the name
+     * @param employee.email        the email address
+     * @param employee.birthday     the birthday as YYYY-MM-DD
+     * @param employee.teamName     the name of the development team
+     * @param employee.levelAndJob  the career level and job of the employee
+     * @param employee.active       true if employee is still active, false otherwise
+     * @param employee.editUrl      the URL to edit the data of the employee
+     * @param employee.deleteUrl    the URL to edit the delete the employee
+     */
+    const appendEmployee = function (employee) {
+        // Find a <table> element with id="employee-table"
+        const table = document.getElementById("employee-data");
+
+        // Create an empty <tr> element and add it to the last position of the table
+        const row = table.insertRow(-1);
+        // Todo danielw: add id value
+
+        // Insert new cells (<td> elements)
+        row.insertCell(0).innerText = employee.name;
+        row.insertCell(1).innerText = employee.email;
+        row.insertCell(2).innerText = employee.birthday;
+        row.insertCell(3).innerText = employee.teamName;
+        row.insertCell(4).innerText = employee.levelAndJob;
+
+        if (employee.active) {
+            row.insertCell(5).innerHTML = '<span class="badge badge-success">Active</span>';
+        } else {
+            row.insertCell(5).innerHTML = '<span class="badge badge-secondary">Inactive</span>';
+        }
+
+        row.insertCell(6).innerHTML = '<a href="' + employee.editUrl + '"><i class="material-icons table-action-icon">edit</i></a>' +
+                                      '<a href="' + employee.deleteUrl + '"><i class="material-icons table-action-icon">delete</i></a>';
+    };
+
+    /**
+     * Create a new employee on the server.
+     */
+    const createEmployee = function () {
+        const employee = {
+            firstName: $("#firstName").val(),
+            lastName: $("#lastName").val(),
+            email: $("#email").val(),
+            birthday: $("#birthday").val(),
+            teamName: $("#teamName").val(),
+            active: true,
+            job: $("#job").val(),
+            careerLevel: $("#careerLevel").val()
+        };
+
+        const successCallback = function () {
+            requestEmployees();
+        };
+
+        $.post({
+            url: '/rest/v1/employees',
+            data: JSON.stringify(employee),
+            type: 'POST',
+            contentType: 'application/json',
+            success: successCallback
+        });
+    };
+
   </script>
   </body>
 </html>
