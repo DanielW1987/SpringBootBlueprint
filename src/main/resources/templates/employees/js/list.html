@@ -8,7 +8,10 @@
 
   <div class="container">
     <h1>Employees (JavaScript)</h1>
-    <button type="button" class="btn btn-primary" id="new-employee-button">New Employee</button>
+    <button type="button" class="btn btn-primary btn-sm" id="new-employee-button" data-toggle="modal" data-target="#employee-create-dialog">
+      New Employee
+    </button>
+
     <table id="employee-table" class="table table-hover">
       <thead>
       <tr>
@@ -25,78 +28,94 @@
       </tbody>
     </table>
 
-    <div id="employee-create-dialog" title="Create new employee">
-      <form method="post" action="#" id="employee-create-form">
-        <fieldset>
-          <!-- First name-->
-          <div class="form-group row">
-            <label for="firstName" class="col-sm-3 col-form-label">First name</label>
-            <div class="col-sm-7">
-              <input type="text" id="firstName"  placeholder="Your first name" class="form-control" required autofocus />
-            </div>
+    <div id="employee-create-dialog" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create new Employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+          <div class="modal-body">
+            <form method="post" action="#" id="create-employee-form">
+              <fieldset>
+                <!-- First name-->
+                <div class="form-group row">
+                  <label for="firstName" class="col-sm-4 col-form-label">First name</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="firstName"  placeholder="Your first name" class="form-control" required autofocus />
+                  </div>
+                </div>
 
-          <!-- Last name -->
-          <div class="form-group row">
-            <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
-            <div class="col-sm-7">
-              <input type="text" id="lastName" placeholder="Your last name" class="form-control" required />
-            </div>
+                <!-- Last name -->
+                <div class="form-group row">
+                  <label for="lastName" class="col-sm-4 col-form-label">Last name</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="lastName" placeholder="Your last name" class="form-control" required />
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group row">
+                  <label for="email" class="col-sm-4 col-form-label">Email</label>
+                  <div class="col-sm-8">
+                    <input type="email" id="email" placeholder="Your email" class="form-control" required />
+                  </div>
+                </div>
+
+                <!-- Birthday -->
+                <div class="form-group row">
+                  <label for="birthday" class="col-sm-4 col-form-label">Birthday</label>
+                  <div class="col-sm-8">
+                    <input type="date" id="birthday" min="1920-01-01" max="2040-12-31" class="form-control" />
+                  </div>
+                </div>
+
+                <!-- Team name -->
+                <div class="form-group row">
+                  <label for="teamName" class="col-sm-4 col-form-label">Team name</label>
+                  <div class="col-sm-8">
+                    <input type="text" id="teamName" placeholder="Your teams name" class="form-control" required />
+                  </div>
+                </div>
+
+                <!-- Career level -->
+                <div class="form-group row">
+                  <label for="careerLevel" class="col-sm-4 col-form-label">Career level</label>
+                  <div class="col-sm-8">
+                    <select id="careerLevel" class="form-control">
+                      <option></option>
+                      <option>Junior</option>
+                      <option>Professional</option>
+                      <option>Senior</option>
+                      <option>Experienced Senior</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Job -->
+                <div class="form-group row">
+                  <label for="job" class="col-sm-4 col-form-label">Job</label>
+                  <div class="col-sm-8">
+                    <select id="job" class="form-control">
+                      <option selected></option>
+                      <option>Java Developer</option>
+                      <option>QA Engineer</option>
+                      <option>Product Manager</option>
+                    </select>
+                  </div>
+                </div>
+
+              </fieldset>
+            </form>
           </div>
-
-          <!-- Email -->
-          <div class="form-group row">
-            <label for="email" class="col-sm-3 col-form-label">Email</label>
-            <div class="col-sm-7">
-              <input type="email" id="email" placeholder="Your email" class="form-control" required />
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btn-sm" id="create-employee-button">Create</button>
+            <button type="button" class="btn btn-danger btn-sm" id="cancel-create-employee-button" data-dismiss="modal">Cancel</button>
           </div>
-
-          <!-- Birthday -->
-          <div class="form-group row">
-            <label for="birthday" class="col-sm-3 col-form-label">Birthday</label>
-            <div class="col-sm-7">
-              <input type="date" id="birthday" min="1920-01-01" max="2040-12-31" class="form-control" />
-            </div>
-          </div>
-
-          <!-- Team name -->
-          <div class="form-group row">
-            <label for="teamName" class="col-sm-3 col-form-label">Team name</label>
-            <div class="col-sm-7">
-              <input type="text" id="teamName" placeholder="Your teams name" class="form-control" required />
-            </div>
-          </div>
-
-          <!-- Career level -->
-          <div class="form-group row">
-            <label for="careerLevel" class="col-sm-3 col-form-label">Career level</label>
-            <div class="col-sm-7">
-              <select id="careerLevel" class="form-control">
-                <option></option>
-                <option>Junior</option>
-                <option>Professional</option>
-                <option>Senior</option>
-                <option>Experienced Senior</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Job -->
-          <div class="form-group row">
-            <label for="job" class="col-sm-3 col-form-label">Job</label>
-            <div class="col-sm-7">
-              <select id="job" class="form-control">
-                <option selected></option>
-                <option>Java Developer</option>
-                <option>QA Engineer</option>
-                <option>Product Manager</option>
-              </select>
-            </div>
-          </div>
-
-        </fieldset>
-      </form>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -109,48 +128,31 @@
      * Load all employees on load or reload
      */
     $(document).ready(function () {
-        // get employees
-        requestEmployees();
-
-        let dialog = $("#employee-create-dialog").dialog({
-            autoOpen: false,
-            height: 550,
-            width: 520,
-            modal: true,
-            buttons: {
-                "Create": function () {
-                    createEmployee();
-                    dialog.dialog( "close" );
-                },
-                Cancel: function() {
-                    dialog.dialog( "close" );
-                }
-            },
-            close: function () {
-                // ToDo DanielW: reset form on close
-            }
-        });
-
-        $("#new-employee-button").button().on("click", function() {
-            // hack: set div containers visibility to visible because it's initially hidden to prevent form popup on page load (maybe there are better solutions)
-            document.getElementById("employee-create-dialog").style.visibility = 'visible';
-            dialog.dialog( "open" );
-        });
+        requestEmployeesFromServer();
+        $("#create-employee-button").button().on("click", createEmployee);
+        $("#cancel-create-employee-button").button().on("click", resetEmployeeForm);
     });
+
+    const resetEmployeeForm = function () {
+        document.getElementById("create-employee-form").reset();
+    };
 
     /**
      * Request employees from REST endpoint via AJAX.
      */
-    const requestEmployees = function () {
+    const requestEmployeesFromServer = function () {
         $.getJSON("/rest/v1/employees", function (json) {
-            clearEmployeeTable();
+            clearHtmlTable();
             jQuery.each(json, function (i, employee) {
-                appendEmployee(employee);
+                appendToHtmlTable(employee);
             });
         });
     };
 
-    const clearEmployeeTable = function () {
+    /**
+     * Removes all tr elements from the employee table body.
+     */
+    const clearHtmlTable = function () {
         $("#employee-data tr").remove();
     };
 
@@ -165,7 +167,7 @@
      * @param employee.editUrl      the URL to edit the data of the employee
      * @param employee.deleteUrl    the URL to edit the delete the employee
      */
-    const appendEmployee = function (employee) {
+    const appendToHtmlTable = function (employee) {
         // Find a <table> element with id="employee-table"
         const table = document.getElementById("employee-data");
 
@@ -190,10 +192,16 @@
                                       '<a href="' + employee.deleteUrl + '"><i class="material-icons table-action-icon">delete</i></a>';
     };
 
+    const createEmployee = function () {
+        sendEmployeeCreateRequest();
+        resetEmployeeForm();
+        $('#employee-create-dialog').modal('hide');
+    };
+
     /**
      * Create a new employee on the server.
      */
-    const createEmployee = function () {
+    const sendEmployeeCreateRequest = function () {
         const employee = {
             firstName: $("#firstName").val(),
             lastName: $("#lastName").val(),
@@ -206,7 +214,7 @@
         };
 
         const successCallback = function () {
-            requestEmployees();
+            requestEmployeesFromServer();
         };
 
         $.post({
