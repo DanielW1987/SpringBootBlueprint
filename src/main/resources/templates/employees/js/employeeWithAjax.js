@@ -5,9 +5,9 @@ const requestEmployees = function () {
       dataType: "json"
   })
   .done(function (json) {
-      clearEmployeeTable();
+      clearHtmlTable();
       jQuery.each(json, function (i, employee) {
-          appendEmployee(employee);
+          appendToHtmlTable(employee);
       });
   })
   .fail(function (xhr, status, errorThrown) {
