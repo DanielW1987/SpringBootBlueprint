@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-slim
+FROM openjdk:8-jdk
 
 ENV TZ=Europe/Berlin
 ENV SERVER_PORT 8080
