@@ -8,6 +8,7 @@ public class ViewNames {
   public static final String EMPLOYEES_EDIT    = "employees/edit";
   public static final String EMPLOYEES_CREATE  = "employees/create";
   public static final String EMPLOYEES_JS_LIST = "employees/js/list";
+  public static final String TODO_LIST         = "todo/index";
 
   // Error pages
   public static final String ERROR     = "error/default";
