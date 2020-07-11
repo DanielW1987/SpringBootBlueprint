@@ -7,3 +7,7 @@ const projectPersistenceService = new ProjectPersistenceService();
 new ProjectInput(new InputValidator(), projectPersistenceService);
 new ProjectList("active", projectPersistenceService);
 new ProjectList("finished", projectPersistenceService);
+
+const faker = require("faker");
+const name = faker.name.findName();
+console.log(name);
