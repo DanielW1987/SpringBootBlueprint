@@ -1,77 +1,64 @@
 <!doctype html>
 <html lang="en">
-<head data-th-replace="fragments/header :: copy"></head>
+<head th:replace="fragments/header :: copy"></head>
 <body>
-<nav data-th-replace="fragments/navigation :: copy"></nav>
+<nav th:replace="fragments/navigation :: copy"></nav>
 
 <div class="container">
   <h1>New Employee</h1>
 
-  <form method="post" action="#" data-th-action="@{ ${createUrl} }" data-th-object="${employeeRequestDto}">
-
-    <!-- Global errors -->
-    <div data-th-if="${#fields.hasGlobalErrors()}" class="alert alert-danger" role="alert">
-      <span data-th-each="err : ${#fields.globalErrors()}" data-th-text="${err}">global error</span>
-    </div>
+  <form method="post" action="#">
 
     <!-- First name-->
     <div class="form-group col-md-6">
       <label for="firstName">First name</label>
-      <input type="text" id="firstName"  placeholder="Your first name" required autofocus
-             data-th-field="*{firstName}" data-th-class="${#fields.hasErrors('firstName')}? 'form-control is-invalid' : 'form-control'" />
-      <div class="invalid-feedback" data-th-errors="*{firstName}">First name error</div>
+      <input type="text" id="firstName" class="form-control" placeholder="Your first name" required autofocus />
     </div>
 
     <!-- Last name -->
     <div class="form-group col-md-6">
       <label for="lastName">Last name</label>
-      <input type="text" id="lastName" placeholder="Your last name" required
-             data-th-field="*{lastName}" data-th-class="${#fields.hasErrors('lastName')}? 'form-control is-invalid' : 'form-control'" />
-      <div class="invalid-feedback" data-th-errors="*{lastName}">Last name error</div>
+      <input type="text" id="lastName" class="form-control" placeholder="Your last name" required />
     </div>
 
     <!-- Email -->
     <div class="form-group col-md-6">
       <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Your email" required
-             data-th-field="*{email}" data-th-class="${#fields.hasErrors('email')}? 'form-control is-invalid' : 'form-control'" />
-      <div class="invalid-feedback" data-th-errors="*{email}">Email error</div>
+      <input type="email" id="email" class="form-control" placeholder="Your email" required />
     </div>
 
     <!-- Birthday -->
     <div class="form-group col-md-6">
       <label for="birthday">Birthday</label>
-      <input type="date" min="1920-01-01" max="2040-12-31" class="form-control" id="birthday" placeholder="Your birthday" data-th-field="*{birthday}" />
+      <input type="date" min="1920-01-01" max="2040-12-31" class="form-control" id="birthday" placeholder="Your birthday" />
     </div>
 
     <!-- Team name -->
     <div class="form-group col-md-6">
       <label for="teamName">Team name</label>
-      <input type="text" id="teamName" placeholder="Your teams name" required
-             data-th-field="*{teamName}" data-th-class="${#fields.hasErrors('teamName')}? 'form-control is-invalid' : 'form-control'" />
-      <div class="invalid-feedback" data-th-errors="*{teamName}">Team name error</div>
+      <input type="text" id="teamName" class="form-control" placeholder="Your teams name" required />
     </div>
 
     <!-- Career level -->
     <div class="form-group col-md-6">
       <label for="careerLevel">Career level</label>
-      <select id="careerLevel" class="form-control" data-th-field="*{careerLevel}">
-        <option selected data-th-value="''"></option>
-        <option data-th-value="'Junior'">Junior</option>
-        <option data-th-value="'Professional'">Professional</option>
-        <option data-th-value="'Senior'">Senior</option>
-        <option data-th-value="'Experienced Senior'">Experienced Senior</option>
+      <select id="careerLevel" class="form-control">
+        <option></option>
+        <option>Junior</option>
+        <option>Professional</option>
+        <option>Senior</option>
+        <option>Experienced Senior</option>
       </select>
     </div>
 
     <!-- Job -->
     <div class="form-group col-md-6">
       <label for="job">Job</label>
-      <select id="job" class="form-control" data-th-field="*{job}">
-        <option selected data-th-value="''"></option>
-        <option data-th-value="'Java Developer'">Java Developer</option>
-        <option data-th-value="'QA Engineer'">QA Engineer</option>
-        <option data-th-value="'Product Manager'">Product Manager</option>
+      <select id="job" class="form-control">
+        <option selected></option>
+        <option>Java Developer</option>
+        <option>QA Engineer</option>
+        <option>Product Manager</option>
       </select>
     </div>
 
@@ -83,6 +70,6 @@
   </form>
 
 </div>
-<div data-th-replace="fragments/footer :: copy"></div>
+<div th:replace="fragments/footer :: copy"></div>
 </body>
 </html>
