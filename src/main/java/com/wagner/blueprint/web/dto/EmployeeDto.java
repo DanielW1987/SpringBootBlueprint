@@ -1,14 +1,19 @@
 package com.wagner.blueprint.web.dto;
 
 import com.wagner.blueprint.config.Endpoints;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
-@SuppressWarnings("unused") // used in html
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class EmployeeDto extends AbstractEntityDto {
 
   private long      id;
