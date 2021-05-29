@@ -3,10 +3,10 @@ package com.wagner.blueprint.service.impl;
 import com.wagner.blueprint.model.entity.Employee;
 import com.wagner.blueprint.model.repository.EmployeeRepository;
 import com.wagner.blueprint.service.EmployeeService;
+import com.wagner.blueprint.service.EmployeeMapper;
 import com.wagner.blueprint.web.dto.EmployeeDto;
 import com.wagner.blueprint.web.dto.request.EmployeeRequestDto;
 import org.jetbrains.annotations.NotNull;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 public class EmployeeServiceImpl implements EmployeeService {
 
   private final EmployeeRepository employeeRepository;
-  private final ModelMapper        modelMapper;
+  private final EmployeeMapper employeeMapper;
 
   @Autowired
-  public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+  public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmployeeMapper employeeMapper) {
     this.employeeRepository = employeeRepository;
-    this.modelMapper        = new ModelMapper();
+    this.employeeMapper = employeeMapper;
   }
 
   @NotNull
@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   public List<EmployeeDto> findAll() {
     return employeeRepository.findAll()
             .stream()
-            .map(employee -> modelMapper.map(employee, EmployeeDto.class))
+            .map(employeeMapper::map)
             .collect(Collectors.toList());
   }
 
@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     Pageable pageRequest = PageRequest.of(currentPage - 1, itemsPerPage);
     return employeeRepository.findAll(pageRequest)
             .stream()
-            .map(employee -> modelMapper.map(employee, EmployeeDto.class))
+            .map(employeeMapper::map)
             .collect(Collectors.toList());
   }
 
@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   public List<EmployeeDto> findByTeamName(String teamName) {
     return employeeRepository.findByTeamName(teamName)
             .stream()
-            .map(employee -> modelMapper.map(employee, EmployeeDto.class))
+            .map(employeeMapper::map)
             .collect(Collectors.toList());
   }
 
@@ -65,30 +65,30 @@ public class EmployeeServiceImpl implements EmployeeService {
   @NotNull
   @Override
   public Optional<EmployeeDto> find(long id) {
-    Optional<Employee> certification = employeeRepository.findById(id);
+    Optional<Employee> employee = employeeRepository.findById(id);
 
-    return certification.map(value -> modelMapper.map(value, EmployeeDto.class));
+    return employee.map(employeeMapper::map);
   }
 
   @NotNull
   @Override
   public EmployeeDto create(@NotNull EmployeeRequestDto request) {
-    Employee employee = modelMapper.map(request, Employee.class);
+    Employee employee = employeeMapper.map(request);
     employeeRepository.save(employee);
 
-    return modelMapper.map(employee, EmployeeDto.class);
+    return employeeMapper.map(employee);
   }
 
   @NotNull
   @Override
   public List<EmployeeDto> createAll(@NotNull Iterable<EmployeeRequestDto> request) {
     List<Employee> employees = new ArrayList<>();
-    request.forEach(employeeRequestDto -> employees.add(modelMapper.map(employeeRequestDto, Employee.class)));
+    request.forEach(employeeRequestDto -> employees.add(employeeMapper.map(employeeRequestDto)));
 
     employeeRepository.saveAll(employees);
 
     return employees.stream()
-            .map(employee -> modelMapper.map(employee, EmployeeDto.class))
+            .map(employeeMapper::map)
             .collect(Collectors.toList());
   }
 
@@ -99,11 +99,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeDto employeeResponse        = null;
 
     if (employeeOptional.isPresent()) {
-      Employee employee = employeeOptional.get();
-      modelMapper.map(request, employee);
-
+      Employee employee = employeeMapper.map(request);
       employeeRepository.save(employee);
-      employeeResponse = modelMapper.map(employee, EmployeeDto.class);
+      employeeResponse = employeeMapper.map(employee);
     }
 
     return Optional.ofNullable(employeeResponse);
