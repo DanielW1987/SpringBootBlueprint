@@ -2,7 +2,6 @@ package com.wagner.blueprint.config;
 
 import com.wagner.blueprint.model.entity.Employee;
 import com.wagner.blueprint.model.repository.EmployeeRepository;
-import com.wagner.blueprint.model.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,7 +17,7 @@ public class DevelopmentDbInitializer implements ApplicationRunner {
   private final EmployeeRepository employeeRepository;
 
   @Autowired
-  public DevelopmentDbInitializer(EmployeeRepository employeeRepository, TeamRepository teamRepository) {
+  public DevelopmentDbInitializer(EmployeeRepository employeeRepository) {
     this.employeeRepository = employeeRepository;
   }
 
