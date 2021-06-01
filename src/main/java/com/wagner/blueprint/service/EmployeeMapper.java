@@ -12,6 +12,7 @@ public class EmployeeMapper {
     Employee employee = Employee.builder()
       .firstName(request.getFirstName())
       .lastName(request.getLastName())
+      .teamName(request.getTeamName())
       .email(request.getEmail())
       .birthday(request.getBirthday())
       .careerLevel(request.getCareerLevel())
